@@ -14,27 +14,28 @@ pipeline {
 //       }
 //     }
         
-    stage('Build Container') {
+   stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build dockerimagename
+    
+                }
+      }
+    }
+   stage('Build Container') {
       steps {
         echo 'Building Container..'
                 script {
                     def dockerHome = tool 'MyDocker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-      }
-    }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
+    
         }
       }
     }
       
           stage('Build B') {
              steps {
-                 build job: "Sonar-project", wait: true
+                 build job: "Sonar-Project", wait: true
                     }
                 }
 
